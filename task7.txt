@@ -1,0 +1,38 @@
+
+CREATE VIEW customer_contacts AS
+SELECT customer_id, first_name, last_name, email
+FROM customers;
+
+
+CREATE VIEW order_summary AS
+SELECT o.order_id, o.order_date, c.first_name, c.last_name, o.total_amount
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id;
+
+
+CREATE VIEW product_inventory_status AS
+SELECT product_id, product_name, quantity_in_stock,
+       CASE 
+           WHEN quantity_in_stock < 10 THEN 'Low'
+           WHEN quantity_in_stock < 50 THEN 'Medium'
+           ELSE 'High'
+       END AS inventory_level
+FROM products;
+
+
+
+SELECT * FROM order_summary 
+WHERE order_date >= '2023-01-01'
+ORDER BY total_amount DESC;
+
+
+CREATE VIEW employee_directory AS
+SELECT employee_id, first_name, last_name, department, position
+FROM employees;
+
+
+CREATE OR REPLACE VIEW customer_contacts AS
+SELECT customer_id, first_name, last_name, email, phone
+FROM customers;
+
+DROP VIEW IF EXISTS old_view_name;
